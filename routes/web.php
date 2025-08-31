@@ -250,47 +250,7 @@ Route::middleware(['web', 'loginauth'])->group(function () {
         Route::get('/cetak/{id}', [App\Http\Controllers\ILP\PelayananController::class, 'cetakPdf'])->name('cetak');
         Route::post('/get-summary', [App\Http\Controllers\IlpController::class, 'getSummary'])->name('get-summary');
         Route::post('/send-pdf', [App\Http\Controllers\IlpController::class, 'sendPdf'])->name('send-pdf');
-        Route::post('/send-whatsapp', [App\Http\Controllers\IlpController::class, 'sendWhatsApp'])->name('send-whatsapp');
-        
-        // WhatsApp Gateway Routes
-        Route::prefix('whatsapp')->name('whatsapp.')->group(function () {
-            Route::post('/send', [App\Http\Controllers\WhatsAppController::class, 'sendMessage'])->name('send');
-            Route::get('/session/status', [App\Http\Controllers\WhatsAppController::class, 'getSessionStatus'])->name('session.status');
-            Route::get('/session/qr', [App\Http\Controllers\WhatsAppController::class, 'getQRCode'])->name('session.qr');
-            Route::post('/session/create', [App\Http\Controllers\WhatsAppController::class, 'createSession'])->name('session.create');
-            Route::delete('/session/delete', [App\Http\Controllers\WhatsAppController::class, 'deleteSession'])->name('session.delete');
-            Route::post('/webhook', [App\Http\Controllers\WhatsAppController::class, 'webhook'])->name('webhook');
-            Route::get('/dashboard', function() {
-                return view('whatsapp.dashboard');
-            })->name('dashboard');
-            Route::get('/queue-dashboard', function() {
-                return view('whatsapp.queue-dashboard');
-            })->name('queue.dashboard');
-            
-            // Queue Management Routes
-            Route::post('/queue/process', [App\Http\Controllers\WhatsAppController::class, 'processQueue'])->name('queue.process');
-            Route::get('/queue/stats', [App\Http\Controllers\WhatsAppController::class, 'getQueueStats'])->name('queue.stats');
-            Route::get('/queue/list', [App\Http\Controllers\WhatsAppController::class, 'getQueueList'])->name('queue.list');
-            Route::delete('/queue/{id}', [App\Http\Controllers\WhatsAppController::class, 'deleteFromQueue'])->name('queue.delete');
-            Route::post('/queue/{id}/retry', [App\Http\Controllers\WhatsAppController::class, 'retryMessage'])->name('queue.retry');
-            
-            // Node.js WhatsApp Gateway Routes
-            Route::prefix('node')->name('node.')->group(function () {
-                Route::get('/dashboard', [App\Http\Controllers\WhatsAppNodeController::class, 'dashboard'])->name('dashboard');
-                Route::post('/qr-code', [App\Http\Controllers\WhatsAppNodeController::class, 'getQrCode'])->name('qr');
-                Route::get('/status', [App\Http\Controllers\WhatsAppNodeController::class, 'getServerStatus'])->name('status');
-                Route::post('/send-message', [App\Http\Controllers\WhatsAppNodeController::class, 'sendMessage'])->name('send-message');
-                Route::post('/send-file', [App\Http\Controllers\WhatsAppNodeController::class, 'sendFile'])->name('send-file');
-                Route::post('/process-queue', [App\Http\Controllers\WhatsAppNodeController::class, 'processQueueViaNode'])->name('process-queue');
-                Route::post('/start', [\App\Http\Controllers\WhatsAppNodeController::class, 'startServer'])->name('start');
-                Route::post('/stop', [App\Http\Controllers\WhatsAppNodeController::class, 'stopServer'])->name('stop');
-                Route::post('/clear-cache', [App\Http\Controllers\WhatsAppNodeController::class, 'clearCache'])->name('clear-cache');
-                Route::post('/quick-start', [App\Http\Controllers\WhatsAppNodeController::class, 'quickStartServer'])->name('quick-start');
-                Route::get('/logs', [App\Http\Controllers\WhatsAppNodeController::class, 'getLogs'])->name('logs');
-                Route::post('/execute-command', [App\Http\Controllers\WhatsAppNodeController::class, 'executeCommand'])->name('execute-command');
-                Route::get('/realtime-output', [App\Http\Controllers\WhatsAppNodeController::class, 'getRealtimeOutput'])->name('realtime-output');
-            });
-        });
+
         Route::get('/faktor-resiko', [App\Http\Controllers\ILP\FaktorResikoController::class, 'index'])->name('faktor-resiko');
         Route::get('/get-posyandu', [App\Http\Controllers\ILP\FaktorResikoController::class, 'getPosyandu'])->name('get-posyandu');
         

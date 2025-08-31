@@ -60,7 +60,7 @@ class LoginAuth
             $request->is('livewire*') || 
             $request->is('api/bpjs/*') || 
             $request->is('error/*') ||
-            $request->is('ilp/whatsapp/node/*') ||
+
             $request->is('test-*')
         ) {
             return $next($request);
@@ -79,8 +79,7 @@ class LoginAuth
                 $request->is('register*') || 
                 $request->is('register/generateNoReg') ||
                 $request->is('register/pasien*') ||
-                $request->is('register/store*') ||
-                $request->is('ilp/whatsapp/*')
+                $request->is('register/store*')
             )
         ) {
             Log::info('Allowing API testing access for path: ' . $request->path());

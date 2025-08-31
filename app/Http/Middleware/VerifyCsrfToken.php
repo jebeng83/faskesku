@@ -17,7 +17,7 @@ class VerifyCsrfToken extends Middleware
         '/livewire/*',
         '/refresh-csrf',
         '/customlogin',
-        '/ilp/whatsapp/node/*',
+
         '/test-*',
     ];
     

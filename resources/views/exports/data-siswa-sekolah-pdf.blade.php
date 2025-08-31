@@ -194,7 +194,7 @@
             <th style="width: 6%;">Kelas</th>
             <th style="width: 10%;">Nama Ortu</th>
             <th style="width: 8%;">NIK Ortu</th>
-            <th style="width: 8%;">No WhatsApp</th>
+
             <th style="width: 8%;">Disabilitas</th>
             <th style="width: 6%;">Status</th>
          </tr>
@@ -222,7 +222,7 @@
             <td class="text-center">{{ $siswa['kelas'] }}</td>
             <td>{{ $siswa['nama_ortu'] }}</td>
             <td>{{ $siswa['nik_ortu'] }}</td>
-            <td>{{ $siswa['no_whatsapp'] }}</td>
+
             <td>
                @if($siswa['jenis_disabilitas'] == 'Non Disabilitas')
                <span class="badge badge-success">{{ $siswa['jenis_disabilitas'] }}</span>

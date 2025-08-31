@@ -30,78 +30,55 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'username' => 'required',
-                'password' => 'required',
-                'poli' => 'required',
+                'username' => 'required|string',
+                'password' => 'required|string',
+                'poli' => 'required|string',
             ]);
 
-            // Authenticate user against database
-            $user = DB::table('user')
-                ->where('id_user', $request->username)
-                ->first();
+            // Authenticate user against database using AES_DECRYPT
+            $user = DB::select("
+                SELECT * FROM user 
+                WHERE AES_DECRYPT(id_user, 'nur') = ? 
+                AND AES_DECRYPT(password, 'windi') = ?
+                LIMIT 1
+            ", [$request->input('username'), $request->input('password')]);
 
-            if (!$user) {
-                Log::warning('Login failed: User not found', [
-                    'username' => $request->username,
+            if (empty($user)) {
+                Log::warning('Login failed: User not found or invalid credentials', [
+                    'username' => $request->input('username'),
                     'ip' => $request->ip() ?? 'unknown',
                     'user_agent' => $request->userAgent() ?? 'unknown'
                 ]);
 
                 return redirect()->route('login')
-                    ->with('error', 'Username tidak terdaftar dalam sistem. Silakan periksa kembali username Anda atau hubungi administrator.');
+                    ->with('error', 'Username atau password yang Anda masukkan salah. Silakan periksa kembali kredensial Anda.');
             }
 
-            // Decrypt and verify password
-            try {
-                // Try to decrypt the stored password
-                $decryptedPassword = decrypt($user->password);
-                
-                if ($decryptedPassword !== $request->password) {
-                    Log::warning('Login failed: Invalid password', [
-                        'username' => $request->username,
-                        'ip' => $request->ip() ?? 'unknown',
-                        'user_agent' => $request->userAgent() ?? 'unknown'
-                    ]);
-
-                    return redirect()->route('login')
-                        ->with('error', 'Password yang Anda masukkan salah. Silakan periksa kembali password Anda.');
-                }
-            } catch (\Exception $decryptError) {
-                // If decryption fails, try direct comparison (for backward compatibility)
-                if ($user->password !== $request->password) {
-                    Log::warning('Login failed: Password mismatch (direct comparison)', [
-                        'username' => $request->username,
-                        'decrypt_error' => $decryptError->getMessage(),
-                        'ip' => $request->ip() ?? 'unknown',
-                        'user_agent' => $request->userAgent() ?? 'unknown'
-                    ]);
-
-                    return redirect()->route('login')
-                        ->with('error', 'Password yang Anda masukkan salah. Silakan periksa kembali password Anda.');
-                }
-            }
+            $user = $user[0]; // Get first result
 
             // Authentication successful - Set session data
-            session([
-                'username' => $request->username,
-                'kd_poli' => $request->poli,
-                'poli' => $request->poli,
-                'logged_in' => true,
-                'login_time' => now()->format('Y-m-d H:i:s')
-            ]);
+            if ($user) {
+                session([
+                    'username' => $request->input('username'),
+                    'kd_poli' => $request->input('poli'),
+                    'poli' => $request->input('poli'),
+                    'logged_in' => true,
+                    'login_time' => now()->format('Y-m-d H:i:s')
+                ]);
 
-            // Pastikan session disimpan
-            session()->save();
+                // Pastikan session disimpan
+                session()->save();
 
-            // Log untuk debugging
-            Log::info('Login: User logged in successfully', [
-                'username' => $request->username,
-                'kd_poli' => $request->poli,
-                'poli' => $request->poli,
-                'session_id' => session()->getId(),
-                'ip' => $request->ip() ?? 'unknown',
-                'user_agent' => $request->userAgent() ?? 'unknown'
-            ]);
+                // Log untuk debugging
+                Log::info('Login: User logged in successfully', [
+                    'username' => $request->input('username'),
+                    'kd_poli' => $request->input('poli'),
+                    'poli' => $request->input('poli'),
+                    'session_id' => session()->getId(),
+                    'ip' => $request->ip() ?? 'unknown',
+                    'user_agent' => $request->userAgent() ?? 'unknown'
+                ]);
+            }
 
             return redirect()->intended('home')
                 ->with('success', 'Login berhasil! Selamat datang di sistem.');

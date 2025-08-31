@@ -64,7 +64,6 @@ class DataSiswaSekolahController extends Controller
             'data_siswa_sekolah.status',
             'data_siswa_sekolah.status_siswa',
             'data_siswa_sekolah.no_tlp',
-            'data_siswa_sekolah.no_whatsapp',
             'data_sekolah.nama_sekolah',
             'jenis_sekolah.nama',
             'data_kelas.kelas',
@@ -130,7 +129,6 @@ class DataSiswaSekolahController extends Controller
                 'kelas' => $item->kelas ?? '-',
                 'nama_ortu' => $item->nama_ortu ?? '-',
                 'nik_ortu' => $item->nik_ortu ?? '-',
-                'no_whatsapp' => $item->no_whatsapp ?? '-',
                 'nama_ibu' => '-',
                 'status' => $item->status_siswa ?? 'Aktif',
                 'alamat' => $alamat,
@@ -205,8 +203,7 @@ class DataSiswaSekolahController extends Controller
         ]);
         
         $validatedData = $request->validated();
-        // Note: no_telepon_ortu is automatically mapped to no_whatsapp via model mutator
-        /** @var \App\Models\DataSiswaSekolah|null $siswa */
+        /** @var \App\Models\DataSiswaSekolah $siswa */
         $siswa = DataSiswaSekolah::create($validatedData);
         
         if ($siswa && $siswa->id) {
@@ -314,7 +311,7 @@ class DataSiswaSekolahController extends Controller
             'nisn' => $request->nisn,
             'jenis_kelamin' => $request->jenis_kelamin,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'no_telepon_ortu' => $request->no_telepon_ortu, // Uses mutator to map to no_whatsapp
+            'no_telepon_ortu' => $request->no_telepon_ortu,
             'id_sekolah' => $request->id_sekolah,
             'id_kelas' => $request->id_kelas,
             'status' => $request->status,
@@ -322,8 +319,10 @@ class DataSiswaSekolahController extends Controller
         ]);
         
         // Update data pasien jika ada relasi
-        if ($siswa && isset($siswa->pasien) && $siswa->pasien && isset($siswa->pasien->no_rkm_medis)) {
-            $siswa->pasien->update([
+        if ($siswa && $siswa->pasien && $siswa->pasien->no_rkm_medis) {
+            /** @var \App\Models\Pasien $pasien */
+            $pasien = $siswa->pasien;
+            $pasien->update([
                 'no_ktp' => $request->nik,
                 'nm_pasien' => $request->nama_siswa,
                 'jk' => $request->jenis_kelamin,
@@ -331,7 +330,7 @@ class DataSiswaSekolahController extends Controller
                 'tgl_lahir' => $request->tanggal_lahir,
                 'alamat' => $request->alamat
             ]);
-        } else if ($siswa && isset($siswa->no_rkm_medis) && $siswa->no_rkm_medis) {
+        } else if ($siswa && $siswa->no_rkm_medis) {
             // Jika tidak ada relasi pasien, buat record pasien baru
             $pasien = new \App\Models\Pasien();
             $pasien->no_rkm_medis = $siswa->no_rkm_medis;
@@ -356,10 +355,10 @@ class DataSiswaSekolahController extends Controller
      */
     public function destroy($id)
     {
-        /** @var \App\Models\DataSiswaSekolah|null $siswa */
         $siswa = DataSiswaSekolah::find($id);
         
-        if ($siswa && isset($siswa->id)) {
+        if ($siswa) {
+            /** @var \App\Models\DataSiswaSekolah $siswa */
             $siswa->delete();
             return redirect()->route('ilp.data-siswa-sekolah.index')
                             ->with('success', 'Data siswa berhasil dihapus.');
@@ -425,7 +424,6 @@ class DataSiswaSekolahController extends Controller
                 'data_siswa_sekolah.status',
                 'data_siswa_sekolah.status_siswa',
                 'data_siswa_sekolah.no_tlp',
-                'data_siswa_sekolah.no_whatsapp',
                 'data_sekolah.nama_sekolah',
                 'jenis_sekolah.nama as nama_jenis_sekolah',
                 'data_kelas.kelas',
@@ -483,7 +481,6 @@ class DataSiswaSekolahController extends Controller
                     'kelas' => $siswa->kelas,
                     'nama_ortu' => $siswa->nama_ortu ?: '-',
                     'nik_ortu' => $siswa->nik_ortu ?: '-',
-                    'no_whatsapp' => $siswa->no_whatsapp ?: '-',
                     'jenis_disabilitas' => $siswa->jenis_disabilitas ?: 'Non Disabilitas',
                     'status' => $siswa->status_siswa ?: 'Aktif',
                     'alamat' => $siswa->alamat_pasien ?: '-'

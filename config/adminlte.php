@@ -306,83 +306,83 @@ return [
         //     'icon'        => 'fas fa-fw fa-pills',
         //     'label_color' => 'success',
         // ],
-        [
-            'text'    => 'ILP',
-            'icon'    => 'fas fa-fw fa-heartbeat',
-            'submenu' => [
-                [
-                    'text' => 'Dashboard',
-                    'url'  => '/ilp/dashboard',
-                    'icon' => 'fas fa-fw fa-chart-line',
-                ],
-                [
-                    'text' => 'Faktor Resiko',
-                    'url'  => '/ilp/faktor-resiko',
-                    'icon' => 'fas fa-fw fa-flask',
-                ],
-                [
-                    'text' => 'Pendaftaran',
-                    'url'  => '/ilp/pendaftaran',
-                    'icon' => 'fas fa-fw fa-user-plus',
-                ],
-                [
-                    'text' => 'Pelayanan',
-                    'url'  => '/ilp/pelayanan',
-                    'icon' => 'fas fa-fw fa-clipboard-list',
-                ],
-                [
-                    'text' => 'Sasaran CKG',
-                    'url'  => '/ilp/sasaran-ckg',
-                    'icon' => 'fas fa-fw fa-birthday-cake',
-                ],
-                [
-                    'text' => 'Pendaftaran CKG',
-                    'url'  => '/ilp/pendaftaran-ckg',
-                    'icon' => 'fas fa-fw fa-clipboard-check',
-                ],
-                [
-                    'text' => 'Dashboard CKG',
-                    'url'  => '/ilp/dashboard-ckg',
-                    'icon' => 'fas fa-fw fa-chart-bar',
-                ],
-                [
-                    'text' => 'Data Siswa Sekolah',
-                    'url'  => '/ilp/data-siswa-sekolah',
-                    'icon' => 'fas fa-fw fa-graduation-cap',
-                ],
-                [
-                    'text' => 'Dashboard Sekolah',
-                    'url'  => '/ilp/dashboard-sekolah',
-                    'icon' => 'fas fa-fw fa-chart-pie',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'ePPBGM',
-            'icon'    => 'fas fa-fw fa-baby',
-            'submenu' => [
-                [
-                    'text' => 'Data Ibu Hamil',
-                    'url'  => '/anc/data-ibu-hamil',
-                    'icon' => 'fas fa-fw fa-female',
-                ],
-                [
-                    'text' => 'Data Balita Sakit',
-                    'url'  => '/anc/data-balita-sakit',
-                    'icon' => 'fas fa-fw fa-child',
-                ],
-                [
-                    'text' => 'Data Rematri',
-                    'url'  => '/anc/data-rematri',
-                    'icon' => 'fas fa-fw fa-user-friends',
-                ],
-                [
-                    'text' => 'Data Ibu Nifas',
-                    'url'  => '/anc/data-ibu-nifas',
-                    'icon' => 'fas fa-fw fa-baby-carriage',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'ILP',
+        //     'icon'    => 'fas fa-fw fa-heartbeat',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Dashboard',
+        //             'url'  => '/ilp/dashboard',
+        //             'icon' => 'fas fa-fw fa-chart-line',
+        //         ],
+        //         [
+        //             'text' => 'Faktor Resiko',
+        //             'url'  => '/ilp/faktor-resiko',
+        //             'icon' => 'fas fa-fw fa-flask',
+        //         ],
+        //         [
+        //             'text' => 'Pendaftaran',
+        //             'url'  => '/ilp/pendaftaran',
+        //             'icon' => 'fas fa-fw fa-user-plus',
+        //         ],
+        //         [
+        //             'text' => 'Pelayanan',
+        //             'url'  => '/ilp/pelayanan',
+        //             'icon' => 'fas fa-fw fa-clipboard-list',
+        //         ],
+        //         [
+        //             'text' => 'Sasaran CKG',
+        //             'url'  => '/ilp/sasaran-ckg',
+        //             'icon' => 'fas fa-fw fa-birthday-cake',
+        //         ],
+        //         [
+        //             'text' => 'Pendaftaran CKG',
+        //             'url'  => '/ilp/pendaftaran-ckg',
+        //             'icon' => 'fas fa-fw fa-clipboard-check',
+        //         ],
+        //         [
+        //             'text' => 'Dashboard CKG',
+        //             'url'  => '/ilp/dashboard-ckg',
+        //             'icon' => 'fas fa-fw fa-chart-bar',
+        //         ],
+        //         [
+        //             'text' => 'Data Siswa Sekolah',
+        //             'url'  => '/ilp/data-siswa-sekolah',
+        //             'icon' => 'fas fa-fw fa-graduation-cap',
+        //         ],
+        //         [
+        //             'text' => 'Dashboard Sekolah',
+        //             'url'  => '/ilp/dashboard-sekolah',
+        //             'icon' => 'fas fa-fw fa-chart-pie',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text'    => 'ePPBGM',
+        //     'icon'    => 'fas fa-fw fa-baby',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Data Ibu Hamil',
+        //             'url'  => '/anc/data-ibu-hamil',
+        //             'icon' => 'fas fa-fw fa-female',
+        //         ],
+        //         [
+        //             'text' => 'Data Balita Sakit',
+        //             'url'  => '/anc/data-balita-sakit',
+        //             'icon' => 'fas fa-fw fa-child',
+        //         ],
+        //         [
+        //             'text' => 'Data Rematri',
+        //             'url'  => '/anc/data-rematri',
+        //             'icon' => 'fas fa-fw fa-user-friends',
+        //         ],
+        //         [
+        //             'text' => 'Data Ibu Nifas',
+        //             'url'  => '/anc/data-ibu-nifas',
+        //             'icon' => 'fas fa-fw fa-baby-carriage',
+        //         ],
+        //     ],
+        // ],
         [
             'text'        => 'KYC (Verifikasi SSM)',
             'url'         => '/kyc',
@@ -441,22 +441,7 @@ return [
                 ],
             ],
         ],
-        [
-            'text'    => 'WhatsApp Manajemen',
-            'icon'    => 'fab fa-fw fa-whatsapp',
-            'submenu' => [
-                [
-                    'text' => 'Node Dashboard',
-                    'url'  => '/ilp/whatsapp/node/dashboard',
-                    'icon' => 'fas fa-fw fa-server',
-                ],
-                [
-                    'text' => 'Queue Dashboard',
-                    'url'  => '/ilp/whatsapp/dashboard',
-                    'icon' => 'fas fa-fw fa-list-alt',
-                ],
-            ],
-        ],
+
         [
             'text'        => 'Keluar',
             'url'         => '/logout',

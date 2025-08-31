@@ -37,10 +37,7 @@
                         <th>Jenis Disabilitas</th>
                         <td>{{ $detail->jenis_disabilitas ?? '-' }}</td>
                      </tr>
-                     <tr>
-                         <th>No. WhatsApp</th>
-                         <td>{{ $detail->no_whatsapp ?? '-' }}</td>
-                      </tr>
+
                      <tr>
                         <th>Alamat</th>
                         <td>{{ $detail->alamat_siswa ?? '-' }}</td>

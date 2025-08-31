@@ -190,7 +190,7 @@
                         <th width="6%">Kelas</th>
                         <th width="8%">Nama Ortu</th>
                         <th width="7%">NIK Ortu</th>
-                        <th width="8%">No WhatsApp</th>
+
                         <th width="7%">Disabilitas</th>
                         <th width="6%">Status</th>
                         <th width="10%">Aksi</th>
@@ -223,15 +223,7 @@
                         <td>{{ $siswa['kelas'] }}</td>
                         <td>{{ $siswa['nama_ortu'] }}</td>
                         <td><span class="badge badge-secondary">{{ $siswa['nik_ortu'] }}</span></td>
-                        <td>
-                           @if($siswa['no_whatsapp'] != '-')
-                           <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siswa['no_whatsapp']) }}" target="_blank" class="text-success">
-                              <i class="fab fa-whatsapp"></i> {{ $siswa['no_whatsapp'] }}
-                           </a>
-                           @else
-                           <span class="text-muted">-</span>
-                           @endif
-                        </td>
+
                         <td>
                            @if($siswa['jenis_disabilitas'] == 'Non Disabilitas')
                            <span class="badge badge-success">{{ $siswa['jenis_disabilitas'] }}</span>

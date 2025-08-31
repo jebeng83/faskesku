@@ -106,10 +106,8 @@
                                         <td><strong>No. Telepon Ortu</strong></td>
                                         <td>:</td>
                                         <td>
-                                            @if($siswa->no_whatsapp && $siswa->no_whatsapp != '-')
-                                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siswa->no_whatsapp) }}" target="_blank" class="text-success">
-                                                    <i class="fab fa-whatsapp"></i> {{ $siswa->no_whatsapp }}
-                                                </a>
+                                            @if($siswa->no_tlp && $siswa->no_tlp != '-')
+                                                {{ $siswa->no_tlp }}
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif

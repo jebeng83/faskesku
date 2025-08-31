@@ -50,7 +50,6 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
             'data_siswa_sekolah.status',
             'data_siswa_sekolah.status_siswa',
             'data_siswa_sekolah.no_tlp',
-            'data_siswa_sekolah.no_whatsapp',
             'data_sekolah.nama_sekolah',
             'jenis_sekolah.nama as nama_jenis_sekolah',
             'data_kelas.kelas',
@@ -120,7 +119,6 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
             'Nama Orang Tua',
             'NIK Orang Tua',
             'No. Telepon',
-            'No. WhatsApp',
             'Jenis Disabilitas',
             'Status Siswa'
         ];
@@ -146,7 +144,6 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
         $no_rm = $row->no_rkm_medis ? "'" . $row->no_rkm_medis : '-';
         $nik_ortu = $row->nik_ortu ? "'" . $row->nik_ortu : '-';
         $no_tlp = $row->no_tlp ? "'" . $row->no_tlp : '-';
-        $no_wa = $row->no_whatsapp ? "'" . $row->no_whatsapp : '-';
         
         return [
             $no++,
@@ -165,7 +162,6 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
             $row->nama_ortu ?? '-',
             $nik_ortu,
             $no_tlp,
-            $no_wa,
             $row->jenis_disabilitas ?? 'Non Disabilitas',
             $row->status_siswa ?? 'Aktif'
         ];
@@ -231,7 +227,6 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
             'D' => NumberFormat::FORMAT_TEXT, // No. RM
             'O' => NumberFormat::FORMAT_TEXT, // NIK Orang Tua
             'P' => NumberFormat::FORMAT_TEXT, // No. Telepon
-            'Q' => NumberFormat::FORMAT_TEXT, // No. WhatsApp
         ];
     }
 
@@ -257,8 +252,7 @@ class DataSiswaSekolahExport implements FromCollection, WithHeadings, WithStyles
             'N' => 20,  // Nama Orang Tua
             'O' => 18,  // NIK Orang Tua
             'P' => 15,  // No. Telepon
-            'Q' => 15,  // No. WhatsApp
-            'R' => 15,  // Jenis Disabilitas
+            'Q' => 15,  // Jenis Disabilitas
             'S' => 12,  // Status Siswa
         ];
     }

@@ -138,11 +138,7 @@
             // Hapus kelas transisi jika masih ada
             document.body.classList.remove('page-transitioning');
             
-            // Jangan redirect otomatis untuk timeout atau error dari WhatsApp Node endpoints
-            if (ajaxSettings.url && ajaxSettings.url.includes('whatsapp/node')) {
-                console.log('WhatsApp Node endpoint error, tidak melakukan redirect');
-                return;
-            }
+
             
             if (jqXHR.status === 500) {
                 // Redirect ke halaman error jika terjadi internal server error

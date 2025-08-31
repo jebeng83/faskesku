@@ -66,10 +66,7 @@
                                     class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                  </a>
-                                 <button type="button" class="btn btn-success btn-sm btn-kirim-wa"
-                                    data-id="{{ $pasien->no_rkm_medis }}">
-                                    <i class="fab fa-whatsapp"></i> Kirim WA
-                                 </button>
+
                               </div>
                            </td>
                         </tr>
@@ -261,46 +258,7 @@
             const waUrl = baseUrl + "/ilp/sasaran-ckg/kirim-wa/" + id;
             console.log('Kirim WA URL:', waUrl);
             
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin mengirim ucapan selamat ulang tahun via WhatsApp?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Kirim',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Menggunakan fetch API
-                    fetch(waUrl)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok: ' + response.status);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log('Kirim WA response:', data);
-                            if (data.status === 'success') {
-                                // Buka WhatsApp di tab baru
-                                window.open(data.url, '_blank');
-                            } else {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: data.message,
-                                    icon: 'error'
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Kirim WA fetch error:', error);
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Gagal mengirim pesan WhatsApp: ' + error.message,
-                                icon: 'error'
-                            });
-                        });
-                }
-            });
+
         });
     });
 

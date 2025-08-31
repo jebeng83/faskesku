@@ -199,11 +199,7 @@
                                  <a href="{{ route('ilp.cetak', $p['id']) }}" target="_blank" class="dropdown-item">
                                     <i class="fas fa-print text-info mr-2"></i> Cetak
                                  </a>
-                                 <button type="button" class="dropdown-item send-wa-btn" data-id="{{ $p['id'] }}"
-                                    data-no-hp="{{ $p['no_tlp'] ?? '' }}" data-nama="{{ $p['nama_pasien'] }}"
-                                    data-no-rm="{{ $p['no_rm'] }}">
-                                    <i class="fab fa-whatsapp text-success mr-2"></i> Kirim WA
-                                 </button>
+
                               </div>
                            </div>
                         </td>
@@ -769,10 +765,7 @@
                data-target="#modalHasil{{ $p['id'] }}">
                <i class="fas fa-edit mr-1"></i> Edit Data
             </button>
-            <button type="button" class="btn btn-success send-wa-btn" data-id="{{ $p['id'] }}"
-               data-no-hp="{{ $p['no_tlp'] ?? '' }}" data-nama="{{ $p['nama_pasien'] }}" data-no-rm="{{ $p['no_rm'] }}">
-               <i class="fab fa-whatsapp mr-1"></i> Kirim WA
-            </button>
+
          </div>
       </div>
    </div>
@@ -2326,113 +2319,5 @@ $(document).ready(function() {
 </script>
 
 <script>
-   // Fungsi untuk mengirim WhatsApp
-$(document).on('click', '.send-wa-btn', function() {
-    const noHP = $(this).data('no-hp');
-    const nama = $(this).data('nama');
-    const noRM = $(this).data('no-rm');
-    const patientId = $(this).data('id');
-    
-    if (!noHP || noHP === '') {
-        Swal.fire({
-            title: 'Nomor HP Tidak Tersedia',
-            text: 'Pasien tidak memiliki nomor HP yang terdaftar. Silakan update data pasien terlebih dahulu.',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-        return;
-    }
-    
-    // Format nomor HP (hapus 0 di depan dan tambahkan 62)
-    let formattedHP = noHP.replace(/^0/, '62');
-    if (!formattedHP.startsWith('62')) {
-        formattedHP = '62' + formattedHP;
-    }
-    
-    // Tampilkan modal untuk memilih jenis pesan
-    Swal.fire({
-        title: 'Kirim Hasil Pemeriksaan',
-        html: `
-            <div class="text-left mb-4">
-                <p class="mb-2">Kirim hasil pemeriksaan ke:</p>
-                <p class="font-weight-bold mb-0">${nama} (${noRM})</p>
-                <p class="text-muted">No. HP: ${noHP}</p>
-            </div>
-            <div class="form-group text-left">
-                <label for="messageType">Pilih Jenis Pesan:</label>
-                <select class="form-control" id="messageType">
-                    <option value="text">Ringkasan Hasil (Text)</option>
-                    <option value="pdf">File PDF Hasil Pemeriksaan</option>
-                </select>
-            </div>
-            <div class="form-group text-left" id="customMessageContainer">
-                <label for="customMessage">Pesan Tambahan (Opsional):</label>
-                <input type="text" class="form-control" id="customMessage" placeholder="Masukkan pesan tambahan di sini...">
-            </div>
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Kirim',
-        cancelButtonText: 'Batal',
-        focusConfirm: false,
-        preConfirm: () => {
-            return {
-                messageType: document.getElementById('messageType').value,
-                customMessage: document.getElementById('customMessage').value
-            };
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const { messageType, customMessage } = result.value;
-            
-            // Tampilkan loading
-            Swal.fire({
-                title: 'Memproses...',
-                text: 'Sedang menyiapkan pesan WhatsApp',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-            
-            // Kirim permintaan ke endpoint baru
-            $.ajax({
-                url: '{{ route("ilp.send-whatsapp") }}',
-                type: 'POST',
-                data: {
-                    id: patientId,
-                    phone: formattedHP,
-                    type: messageType,
-                    message: customMessage,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Buka WhatsApp dengan pesan yang sudah disiapkan
-                        window.open(response.whatsapp_url, '_blank');
-                        Swal.close();
-                    } else {
-                        Swal.fire({
-                            title: 'Gagal',
-                            text: response.message || 'Gagal mengirim pesan',
-                            icon: 'error'
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    let errorMessage = 'Terjadi kesalahan saat mengirim pesan';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    
-                    Swal.fire({
-                        title: 'Error',
-                        text: errorMessage,
-                        icon: 'error'
-                    });
-                }
-            });
-        }
-    });
-});
 </script>
 @stop

@@ -288,7 +288,6 @@
 
       <form action="{{ route('customlogin') }}" method="post">
          @csrf
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
          <div class="form-group">
             <label for="username">ID Khanza</label>

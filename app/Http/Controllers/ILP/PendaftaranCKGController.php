@@ -180,7 +180,6 @@ class PendaftaranCKGController extends Controller
                 'pasien.kecamatanpj as kecamatan_siswa',
                 'pasien.kabupatenpj as kabupaten_siswa',
                 'data_siswa_sekolah.jenis_disabilitas',
-                'data_siswa_sekolah.no_whatsapp',
                 'data_siswa_sekolah.nik_ortu',
                 'data_siswa_sekolah.nama_ortu',
                 'data_siswa_sekolah.tanggal_lahir as tanggal_lahir_ortu',

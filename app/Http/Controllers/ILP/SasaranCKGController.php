@@ -84,8 +84,6 @@ class SasaranCKGController extends Controller
         
         $url = "https://wa.me/" . $nomorTelepon . "?text=" . urlencode($pesan);
         
-        \Log::info('WhatsApp URL generated: ' . $url);
-        
         return response()->json(['status' => 'success', 'url' => $url]);
     }
-} 
+}
