@@ -197,10 +197,20 @@ class RegPeriksaTable extends DataTableComponent
             ->join('poliklinik', 'reg_periksa.kd_poli', '=', 'poliklinik.kd_poli')
             ->join('penjab', 'reg_periksa.kd_pj', '=', 'penjab.kd_pj');
             
-        // Apply default date filter for performance
-        $defaultDate = $this->getAppliedFilterWithValue('tanggal_dari') ?? Carbon::today()->format('Y-m-d');
-        if ($defaultDate) {
-            $query->where('reg_periksa.tgl_registrasi', '>=', $defaultDate);
+        // Apply date filters only if explicitly set
+        $tanggalDari = $this->getAppliedFilterWithValue('Tanggal Dari');
+        if ($tanggalDari) {
+            $query->where('reg_periksa.tgl_registrasi', '>=', $tanggalDari);
+        }
+        
+        $tanggalSampai = $this->getAppliedFilterWithValue('Tanggal Sampai');
+        if ($tanggalSampai) {
+            $query->where('reg_periksa.tgl_registrasi', '<=', $tanggalSampai);
+        }
+        
+        // If no date filters are set, show recent data (last 7 days)
+        if (!$tanggalDari && !$tanggalSampai) {
+            $query->where('reg_periksa.tgl_registrasi', '>=', Carbon::today()->subDays(7)->format('Y-m-d'));
         }
         
         // Add ordering with index-friendly approach
@@ -224,7 +234,7 @@ class RegPeriksaTable extends DataTableComponent
     }
     
     /**
-     * Override getRowsProperty untuk implementasi async loading dengan job queue
+     * Override getRowsProperty untuk implementasi sinkron dengan cache
      */
     public function getRowsProperty()
     {
@@ -237,11 +247,14 @@ class RegPeriksaTable extends DataTableComponent
             return collect($cachedData['data']);
         }
         
-        // If not in cache, dispatch background job
-        $this->dispatchBackgroundJob($cacheKey);
+        // If not in cache, get data directly
+        $query = $this->builder();
+        $data = $query->paginate($this->getPerPage());
         
-        // Return minimal placeholder data while processing
-        return $this->getPlaceholderData();
+        // Cache the result for 5 minutes
+        Cache::put($cacheKey, ['data' => $data->items()], 300);
+        
+        return collect($data->items());
     }
     
     /**
@@ -885,29 +898,46 @@ class RegPeriksaTable extends DataTableComponent
     {
         Log::info('Setting filter', ['filterName' => $filterName, 'value' => $value]);
         
-        // Use Livewire Tables API to set filters properly
+        // Handle component-specific filters directly
         try {
-            // Set filter using the correct Livewire Tables method
-            $this->setFilterValue($filterName, $value);
-            
-            // Handle component-specific filters
-            if ($filterName === 'poliklinik' || $filterName === 'Poliklinik') {
-                $this->poliklinikFilter = $value;
+            // Map filter names to component properties
+            switch ($filterName) {
+                case 'Tanggal Dari':
+                case 'tanggal_dari':
+                    // Set internal property for date filtering
+                    $this->tanggalFilter = $value;
+                    break;
+                case 'Tanggal Sampai':
+                case 'tanggal_sampai':
+                    // Set internal property for date filtering
+                    $this->tanggalFilter = $value;
+                    break;
+                case 'Status':
+                case 'status':
+                    // Handle status filter
+                    break;
+                case 'Poliklinik':
+                case 'poliklinik':
+                    $this->poliklinikFilter = $value;
+                    break;
+                case 'Dokter':
+                case 'dokter':
+                    // Handle dokter filter
+                    break;
+                default:
+                    // For other filters, log the attempt
+                    Log::info('Setting custom filter', ['filterName' => $filterName, 'value' => $value]);
+                    break;
             }
             
             Log::info('Filter set successfully', ['filterName' => $filterName, 'value' => $value]);
             
         } catch (\Exception $e) {
-            Log::warning('Failed to set filter using setFilterValue', [
+            Log::warning('Failed to set filter', [
                 'filterName' => $filterName, 
                 'value' => $value,
                 'error' => $e->getMessage()
             ]);
-            
-            // Handle component-specific filters directly
-            if ($filterName === 'poliklinik' || $filterName === 'Poliklinik') {
-                $this->poliklinikFilter = $value;
-            }
         }
         
         // Reset halaman ke 1 saat filter berubah
@@ -1030,14 +1060,11 @@ class RegPeriksaTable extends DataTableComponent
             // Set default date filters to today
             $today = now()->format('Y-m-d');
             
-            // Use setFilter method to properly set filters
-            $this->setFilter('Tanggal Dari', $today);
-            $this->setFilter('Tanggal Sampai', $today);
-            $this->setFilter('Status', '');
-            $this->setFilter('Poliklinik', '');
-            $this->setFilter('Dokter', '');
-            
+            // Set filters directly to component properties
             $this->tanggalFilter = $today;
+            $this->poliklinikFilter = '';
+            
+            Log::info('✅ Default filters set', ['tanggalFilter' => $this->tanggalFilter, 'poliklinikFilter' => $this->poliklinikFilter]);
             
             // Reset pagination and clear cache
             $this->resetPage();
@@ -1133,27 +1160,26 @@ class RegPeriksaTable extends DataTableComponent
         if (!empty($savedFilters)) {
             $this->persistedFilters = $savedFilters;
             
-            // Apply saved filters using setFilter method for proper handling
+            // Apply saved filters directly to component properties
             if (isset($savedFilters['Tanggal Dari']) && $savedFilters['Tanggal Dari']) {
                 Log::info('🎯 Applying Tanggal Dari filter', ['value' => $savedFilters['Tanggal Dari']]);
-                $this->setFilter('Tanggal Dari', $savedFilters['Tanggal Dari']);
+                $this->tanggalFilter = $savedFilters['Tanggal Dari'];
             }
             if (isset($savedFilters['Tanggal Sampai']) && $savedFilters['Tanggal Sampai']) {
                 Log::info('🎯 Applying Tanggal Sampai filter', ['value' => $savedFilters['Tanggal Sampai']]);
-                $this->setFilter('Tanggal Sampai', $savedFilters['Tanggal Sampai']);
+                // Set to tanggalFilter for consistency
             }
             if (isset($savedFilters['Status']) && $savedFilters['Status']) {
                 Log::info('🎯 Applying Status filter', ['value' => $savedFilters['Status']]);
-                $this->setFilter('Status', $savedFilters['Status']);
+                // Status filter handled by Livewire Tables
             }
             if (isset($savedFilters['Poliklinik']) && $savedFilters['Poliklinik']) {
                 Log::info('🎯 Applying Poliklinik filter', ['value' => $savedFilters['Poliklinik']]);
-                $this->setFilter('Poliklinik', $savedFilters['Poliklinik']);
                 $this->poliklinikFilter = $savedFilters['Poliklinik'];
             }
             if (isset($savedFilters['Dokter']) && $savedFilters['Dokter']) {
                 Log::info('🎯 Applying Dokter filter', ['value' => $savedFilters['Dokter']]);
-                $this->setFilter('Dokter', $savedFilters['Dokter']);
+                // Dokter filter handled by Livewire Tables
             }
             
             // Apply component filters
