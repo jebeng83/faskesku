@@ -325,7 +325,7 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE) - lihat file LICENSE unt
 
 - 📧 **Email**: support@faskesku.com
 - 🌐 **Website**: [https://faskesku.com](https://faskesku.com)
-- 📱 **WhatsApp**: +62-85229977208
+- 📱 **WhatsApp**: +62-xxx-xxxx-xxxx
 - 💬 **Telegram**: @faskesku_support
 
 ## 🔄 Changelog
@@ -345,5 +345,7 @@ Lihat [CHANGELOG.md](CHANGELOG.md) untuk riwayat perubahan versi.
 
 <div align="center">
   <p><strong>Dibuat dengan ❤️ untuk kemajuan kesehatan Indonesia</strong></p>
-  <p>© 2025 Faskesku. All rights reserved.</p>
+  <p>© 2024 Faskesku. All rights reserved.</p>
 </div>
+
+persingkat ReadMe ini agar lebih simple dan menarik
