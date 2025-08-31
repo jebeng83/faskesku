@@ -345,5 +345,5 @@ Lihat [CHANGELOG.md](CHANGELOG.md) untuk riwayat perubahan versi.
 
 <div align="center">
   <p><strong>Dibuat dengan ❤️ untuk kemajuan kesehatan Indonesia</strong></p>
-  <p>© 2024 Faskesku. All rights reserved.</p>
+  <p>© 2025 Faskesku. All rights reserved.</p>
 </div>
