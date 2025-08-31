@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - E-DOKTER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #28a745;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .tips {
+            margin-top: 30px;
+            text-align: left;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .tips h3 {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anda Sedang Offline</h1>
+        <p>Maaf, Anda tidak dapat mengakses E-DOKTER saat ini karena tidak ada koneksi internet.</p>
+        <p>Silakan periksa koneksi internet Anda dan coba lagi.</p>
+        <button onclick="window.location.reload()" class="btn" id="retryBtn">Coba Lagi</button>
+        
+        <div class="tips">
+            <h3>Tips:</h3>
+            <ul>
+                <li>Periksa koneksi WiFi atau data seluler Anda</li>
+                <li>Pastikan mode pesawat tidak aktif</li>
+                <li>Coba refresh halaman setelah terhubung kembali</li>
+                <li>Jika masalah berlanjut, hubungi administrator sistem</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Periksa status koneksi setiap 5 detik
+        setInterval(function() {
+            const retryBtn = document.getElementById('retryBtn');
+            if (navigator.onLine) {
+                retryBtn.textContent = 'Anda Online - Klik untuk Refresh';
+                retryBtn.style.backgroundColor = '#28a745';
+            } else {
+                retryBtn.textContent = 'Coba Lagi';
+                retryBtn.style.backgroundColor = '#dc3545';
+            }
+        }, 5000);
+        
+        // Tambahkan event listener untuk tombol coba lagi
+        document.getElementById('retryBtn').addEventListener('click', function() {
+            if (!navigator.onLine) {
+                alert('Anda masih offline. Silakan periksa koneksi internet Anda.');
+            }
+        });
+    </script>
+</body>
+</html> 
