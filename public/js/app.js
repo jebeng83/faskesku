@@ -1,4 +1,4 @@
-// JavaScript Dasar untuk E-DOKTER
+// JavaScript Dasar untuk Faskesku
 
 // Implementasi jQuery.once jika belum ada
 (function($) {
@@ -52,7 +52,7 @@ window.addEventListener('offline', function() {
 
 // Inisialisasi saat halaman dimuat
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('E-DOKTER App loaded');
+    console.log('Faskesku App loaded');
     checkOnlineStatus();
     
     // Tambahkan event listener untuk tombol refresh

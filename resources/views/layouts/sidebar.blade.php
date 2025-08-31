@@ -7,7 +7,7 @@
       <div class="sidebar-brand-icon">
          <i class="fas fa-hospital"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">E-Dokter <sup>RSUD Kerjo</sup></div>
+      <div class="sidebar-brand-text mx-3">Faskesku <sup>RSUD Kerjo</sup></div>
    </a>
 
    <!-- Divider -->

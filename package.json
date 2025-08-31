@@ -1,4 +1,5 @@
 {
+    "name": "faskesku",
     "private": true,
     "scripts": {
         "dev": "vite",

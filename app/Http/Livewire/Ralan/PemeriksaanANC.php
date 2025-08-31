@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
  * Class PemeriksaanANC
  * 
  * Class ini mengelola formulir pemeriksaan Antenatal Care (ANC) untuk ibu hamil
- * dalam aplikasi e-Dokter.
+ * dalam aplikasi Faskesku.
  * 
  * Fitur-fitur utama:
  * - Pencatatan data pemeriksaan ANC berdasarkan 10T (standar pemeriksaan ANC)
@@ -21,7 +22,7 @@ use Illuminate\Support\Str;
  * - Perhitungan otomatis IMT, taksiran berat janin, status gizi
  * - Manajemen tatalaksana kasus risiko kehamilan
  * 
- * @author edokter Development Team
+ * @author Faskesku Development Team
  * @version 1.0.0
  */
 class PemeriksaanANC extends Component

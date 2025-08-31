@@ -110,7 +110,7 @@
 <body>
    <div class="header">
       <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo">
-      <h1>E-DOKTER - RSUD GUNUNG TUA</h1>
+      <h1>Faskesku - RSUD GUNUNG TUA</h1>
       <h2>Laporan Antrian Poliklinik</h2>
    </div>
 

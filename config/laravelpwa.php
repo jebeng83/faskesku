@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name' => 'E-DOKTER',
+    'name' => 'Faskesku',
     'manifest' => [
-        'name' => env('APP_NAME', 'E-DOKTER'),
-        'short_name' => 'E-DOKTER',
+        'name' => env('APP_NAME', 'Faskesku'),
+        'short_name' => 'Faskesku',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',

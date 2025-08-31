@@ -74,7 +74,7 @@
 <body>
    <div class="header">
       <div class="title">DATA PENDAFTARAN PCARE BPJS</div>
-      <div class="subtitle">e-Dokter RSUD GUNUNG TUA</div>
+      <div class="subtitle">Faskesku RSUD GUNUNG TUA</div>
    </div>
 
    <div class="filter-info">
